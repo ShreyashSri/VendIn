@@ -1,0 +1,42 @@
+<!-- templates/VendInapp/vendor_detail.html -->
+{% extends 'VendInapp/base.html' %}
+
+{% block title %}{{ vendor.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-3xl font-bold mb-6">{{ vendor.name }}</h1>
+
+    <div class="grid grid-cols-2 gap-6">
+        <div>
+            <h2 class="text-lg font-semibold mb-2">Business Details</h2>
+            <dl class="space-y-2">
+                <dt class="text-gray-600">Business Type</dt>
+                <dd class="font-medium">{{ vendor.business_type }}</dd>
+
+                <dt class="text-gray-600">Location</dt>
+                <dd class="font-medium">{{ vendor.location }}</dd>
+
+                <dt class="text-gray-600">Contact</dt>
+                <dd class="font-medium">{{ vendor.phone }}</dd>
+            </dl>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-semibold mb-2">Operating Hours</h2>
+            <p class="font-medium">{{ vendor.start_time|time:"g:i A" }} - {{ vendor.end_time|time:"g:i A" }}</p>
+
+            <h3 class="text-lg font-semibold mt-4 mb-2">Operating Days</h3>
+            <ul class="space-y-1">
+                {% for day in vendor.operating_days.all %}
+                <li class="capitalize">{{ day.day }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <a href="{% url 'vendor_list' %}" class="text-blue-500 hover:text-blue-600">← Back to Vendors</a>
+    </div>
+</div>
+{% endblock %}

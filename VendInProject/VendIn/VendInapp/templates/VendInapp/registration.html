@@ -1,0 +1,42 @@
+<!-- templates/VendInapp/registration.html -->
+{% extends 'VendInapp/base.html' %}
+
+{% block title %}Register Vendor{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-2xl font-bold mb-6">Vendor Registration</h1>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+            <p class="text-red-500 text-xs">{{ field.errors.0 }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">Operating Days</label>
+            <div class="grid grid-cols-2 gap-4">
+                {% for day in operating_days %}
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="operating_days" value="{{ day|lower }}" class="rounded border-gray-300">
+                    <span class="ml-2">{{ day }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Register
+        </button>
+    </form>
+</div>
+{% endblock %}
