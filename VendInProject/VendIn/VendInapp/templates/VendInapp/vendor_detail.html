@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Details</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .vendor-header {
+            position: relative;
+            text-align: center;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .profile-icon {
+            width: 128px;
+            height: 128px;
+            background: #FFE5E5;
+            border: 4px solid white;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            bottom: -64px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .vendor-info {
+            padding: 80px 30px 30px;
+            text-align: center;
+        }
+
+        .business-name {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .cuisine-type {
+            color: #4ECDC4;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            color: #FFD700;
+            font-size: 24px;
+        }
+
+        .star.half {
+            position: relative;
+        }
+
+        .star.empty {
+            color: #E0E0E0;
+        }
+
+        .reviews {
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 0 30px 30px;
+        }
+
+        @media (min-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #F8F9FA;
+            border-radius: 12px;
+        }
+
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-circle.red {
+            background: #FFE5E5;
+            color: #FF6B6B;
+        }
+
+        .icon-circle.teal {
+            background: #E0F5F4;
+            color: #4ECDC4;
+        }
+
+        .icon-circle.yellow {
+            background: #FFF3E0;
+            color: #FFA726;
+        }
+
+        .icon-circle.purple {
+            background: #F3E5F5;
+            color: #9C27B0;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-label {
+            font-size: 0.875em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .days-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .day-badge {
+            padding: 6px 12px;
+            background: #E0F5F4;
+            color: #4ECDC4;
+            border-radius: 20px;
+            font-size: 0.875em;
+            font-weight: 500;
+        }
+
+        .specialties {
+            padding: 30px;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .specialties-title {
+            font-size: 1.25em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .specialties-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .specialty-badge {
+            padding: 8px 16px;
+            background: #FFE5E5;
+            color: #FF6B6B;
+            border-radius: 20px;
+            font-size: 0.875em;
+            font-weight: 500;
+        }
+
+        .owner-info {
+            margin: 0 30px 30px;
+            padding: 15px;
+            background: #FFF9E6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .owner-info i {
+            color: #FFA726;
+        }
+
+        .owner-text {
+            color: #333;
+        }
+
+        .owner-text strong {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="vendor-header">
+            <img src="/api/placeholder/900/200" alt="Cover" class="cover-image">
+            <div class="profile-icon">🌮</div>
+        </div>
+
+        <div class="vendor-info">
+            <h1 class="business-name">Maria's Taco Heaven</h1>
+            <div class="rating">
+                <i class="fa-solid fa-star star"></i>
+                <i class="fa-solid fa-star star"></i>
+                <i class="fa-solid fa-star star"></i>
+                <i class="fa-solid fa-star star"></i>
+                <i class="fa-solid fa-star-half-stroke star"></i>
+                <span class="reviews">(128 reviews)</span>
+            </div>
+            <p class="cuisine-type">Mexican Street Food</p>
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-item">
+                <div class="icon-circle red">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Phone</div>
+                    <div class="detail-value">(555) 123-4567</div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="icon-circle teal">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">maria@tacoheaven.com</div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="icon-circle yellow">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value">123 Street Food Lane, Foodie District</div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="icon-circle purple">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Hours</div>
+                    <div class="detail-value">11:00 AM - 9:00 PM</div>
+                </div>
+            </div>
+
+            <div class="detail-item" style="grid-column: 1 / -1;">
+                <div class="icon-circle teal">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Days Open</div>
+                    <div class="days-grid">
+                        <span class="day-badge">Mon</span>
+                        <span class="day-badge">Tue</span>
+                        <span class="day-badge">Wed</span>
+                        <span class="day-badge">Thu</span>
+                        <span class="day-badge">Fri</span>
+                        <span class="day-badge">Sat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="specialties">
+            <h2 class="specialties-title">Specialties</h2>
+            <div class="specialties-grid">
+                <span class="specialty-badge">Fish Tacos</span>
+                <span class="specialty-badge">Birria Quesadillas</span>
+                <span class="specialty-badge">Elote</span>
+            </div>
+        </div>
+
+        <div class="owner-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <p class="owner-text">
+                <strong>Owner:</strong> Maria Rodriguez
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Add any interactive features here
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add JavaScript functionality here
+        });
+    </script>
+</body>
+</html>
