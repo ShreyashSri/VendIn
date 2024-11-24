@@ -1,0 +1,309 @@
+
+{% load static %}  <!-- Add this at the top -->
+
+{% block content %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFA51E, #FF8C42);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2F3542;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .event-type {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #FF8C42;
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .event-details {
+            margin-bottom: 30px;
+        }
+
+        .event-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #2F3542;
+            font-size: 1.1em;
+        }
+
+        .event-info i {
+            margin-right: 10px;
+            color: #FFA51E;
+            font-weight: bold;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
+        .varieties-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fff5e6;
+            border-radius: 10px;
+        }
+
+        .varieties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .variety-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .ratings-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .rating-stars {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+
+        .comments-section {
+            margin-bottom: 30px;
+        }
+
+        .comment-form {
+            margin-bottom: 20px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .rating-input {
+            margin-bottom: 15px;
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #FFA51E, #FF8C42);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(255, 159, 67, 0.2);
+        }
+
+        .comment {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #57606F;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2F3542;
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'events' %}" class="back-btn">← Back to Events</a>
+        
+        <div class="header">
+            <span class="event-type">Food festival</span>
+            <h1>Mango Mela 2025</h1>
+        </div>
+
+        <div class="event-details">
+            <div class="event-info">
+                <i>📅</i>
+                <span>Sunday, december 23, 2024</span>
+            </div>
+            <div class="event-info">
+                <i>⏰</i>
+                <span>8:00 AM - 2:00 PM</span>
+            </div>
+            <div class="event-info">
+                <i>📍</i>
+                <span>Lalbagh Botanical Garden</span>
+            </div>
+            <div class="event-info">
+                <i>💰</i>
+                <span>Entry Fee: ₹20 (Garden entry fee)</span>
+            </div>
+            <p style="margin-top: 20px; line-height: 1.6;">
+                Experience Karnataka's finest mangoes at the annual Mango Mela! This year, 100 farmers from various 
+                regions of Karnataka showcase their extensive variety of mangoes. Enjoy fresh mango treats while 
+                strolling through the beautiful Lalbagh Botanical Garden. Perfect for mango enthusiasts and families 
+                looking for a delightful weekend experience.
+            </p>
+        </div>
+
+        <div class="image-gallery">
+            <img src="https://lalbaghbotanicalgarden.in/wp-content/uploads/2024/04/Lalbagh-Mango-Mela-2024.webp" alt="Mango varieties display" class="gallery-img">
+            <img src="data:image/jpeg;base64,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" alt="Lalbagh garden view" class="gallery-img">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA3-7BCGuyWL5iF-gKC0MyvSXjzglh3NLB9Q&s" alt="Mango treats" class="gallery-img">
+        </div>
+
+        <div class="varieties-section">
+            <h2>Featured Mango Varieties</h2>
+            <div class="varieties-grid">
+                <div class="variety-item">
+                    <h3>Alphonso</h3>
+                    <p>The King of Mangoes</p>
+                </div>
+                <div class="variety-item">
+                    <h3>Raspuri</h3>
+                    <p>Karnataka's Special</p>
+                </div>
+                <div class="variety-item">
+                    <h3>Mallika</h3>
+                    <p>Sweet & Aromatic</p>
+                </div>
+                <div class="variety-item">
+                    <h3>Badami</h3>
+                    <p>Local Favorite</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ratings-section">
+            <h2>Ratings & Reviews</h2>
+            <div class="rating-stars">★★★★★ 4.8/5</div>
+            <p>Based on 156 reviews</p>
+        </div>
+
+        <div class="comments-section">
+            <h2>Add Your Review</h2>
+            <form class="comment-form">
+                <div class="rating-input">
+                    <label>Your Rating: </label>
+                    <select style="padding: 5px; margin-left: 10px;">
+                        <option>5 stars</option>
+                        <option>4 stars</option>
+                        <option>3 stars</option>
+                        <option>2 stars</option>
+                        <option>1 star</option>
+                    </select>
+                </div>
+                <textarea class="comment-input" placeholder="Share your experience..." rows="4"></textarea>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+
+            <h2 style="margin: 30px 0 20px;">Recent Reviews</h2>
+            <div class="comment">
+                <div class="comment-header">
+                    <span>Akshay P.</span>
+                    <span>★★★★★</span>
+                </div>
+                <p>Great variety of mangoes! The Alphonso and Raspuri were exceptionally sweet this year.</p>
+            </div>
+            <div class="comment">
+                <div class="comment-header">
+                    <span>Meera S.</span>
+                    <span>★★★★★</span>
+                </div>
+                <p>Beautiful location and amazing mangoes. The mango ice cream was a delightful treat!</p>
+            </div>
+            <div class="comment">
+                <div class="comment-header">
+                    <span>David M.</span>
+                    <span>★★★★☆</span>
+                </div>
+                <p>Wonderful experience but gets crowded by noon. Recommend going early morning.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.comment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your review! It will appear after moderation.');
+            e.target.reset();
+        });
+    </script>
+{% endblock %}

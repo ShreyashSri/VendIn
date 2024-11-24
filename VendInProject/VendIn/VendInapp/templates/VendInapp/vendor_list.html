@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Vendors Near You</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .search-bar button {
+            padding: 12px 24px;
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #ff5252;
+        }
+
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .vendor-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .vendor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vendor-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vendor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .vendor-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4ECDC4;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .vendor-info {
+            padding: 20px;
+        }
+
+        .vendor-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .vendor-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .vendor-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .detail-item i {
+            color: #FF6B6B;
+            width: 16px;
+        }
+
+        .vendor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #4CAF50;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .status.closed {
+            color: #FF6B6B;
+        }
+
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .vendors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .page-button {
+            padding: 8px 16px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-button:hover {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .page-button.active {
+            background: #FF6B6B;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Street Food Vendors Near You</h1>
+            <p>Discover amazing local food vendors in your neighborhood</p>
+        </div>
+
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Cuisine Type</label>
+                    <select>
+                        <option value="">All Cuisines</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="italian">Italian</option>
+                        <option value="indian">Indian</option>
+                        <option value="asian">Asian</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Rating</label>
+                    <select>
+                        <option value="">All Ratings</option>
+                        <option value="4">4+ Stars</option>
+                        <option value="3">3+ Stars</option>
+                        <option value="2">2+ Stars</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Distance</label>
+                    <select>
+                        <option value="">Any Distance</option>
+                        <option value="1">Within 1 mile</option>
+                        <option value="3">Within 3 miles</option>
+                        <option value="5">Within 5 miles</option>
+                    </select>
+                </div>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search by vendor name or food type...">
+                <button><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+
+        <div class="vendors-grid">
+            <!-- Vendor Card 1 -->
+            <div class="vendor-card">
+                <div class="vendor-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/StreetfoodNY.jpg/1200px-StreetfoodNY.jpg" alt="Maria's Taco Heaven">
+                    <span class="vendor-badge">0.3 miles</span>
+                </div>
+                <div class="vendor-info">
+                    <h3 class="vendor-name">Maria's Taco Heaven</h3>
+                    <div class="vendor-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">(128)</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="detail-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Mexican Street Food</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>11:00 AM - 9:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Street Food Lane</span>
+                        </div>
+                    </div>
+                    <div class="vendor-tags">
+                        <span class="tag">Tacos</span>
+                        <span class="tag">Quesadillas</span>
+                        <span class="tag">Burritos</span>
+                    </div>
+                    <div class="status">
+                        <i class="fas fa-circle"></i>
+                        <span>Open Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendor Card 2 -->
+            <div class="vendor-card">
+                <div class="vendor-image">
+                    <img src="https://bsmedia.business-standard.com/_media/bs/img/article/2020-12/14/full/1607937637-9596.jpg" alt="Pizza Paradise">
+                    <span class="vendor-badge">0.8 miles</span>
+                </div>
+                <div class="vendor-info">
+                    <h3 class="vendor-name">Pizza Paradise</h3>
+                    <div class="vendor-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-count">(95)</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="detail-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Italian Street Food</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>12:00 PM - 10:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>456 Food Court Ave</span>
+                        </div>
+                    </div>
+                    <div class="vendor-tags">
+                        <span class="tag">Pizza</span>
+                        <span class="tag">Pasta</span>
+                        <span class="tag">Sandwiches</span>
+                    </div>
+                    <div class="status closed">
+                        <i class="fas fa-circle"></i>
+                        <span>Closed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more vendor cards here -->
+            <!-- Vendor Card 3 -->
+            <div class="vendor-card">
+                <div class="vendor-image">
+                    <img src="https://c8.alamy.com/comp/BEHWP2/street-food-vendor-in-manhattan-in-new-york-city-BEHWP2.jpg" alt="Sushi Station">
+                    <span class="vendor-badge">1.2 miles</span>
+                </div>
+                <div class="vendor-info">
+                    <h3 class="vendor-name">Sushi Station</h3>
+                    <div class="vendor-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-count">(156)</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="detail-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Japanese Street Food</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>11:30 AM - 8:30 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>789 Sushi Lane</span>
+                        </div>
+                    </div>
+                    <div class="vendor-tags">
+                        <span class="tag">Sushi</span>
+                        <span class="tag">Ramen</span>
+                        <span class="tag">Bento</span>
+                    </div>
+                    <div class="status">
+                        <i class="fas fa-circle"></i>
+                        <span>Open Now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="page-button active">1</button>
+            <button class="page-button">2</button>
+            <button class="page-button">3</button>
+            <button class="page-button">4</button>
+            <button class="page-button">5</button>
+        </div>
+    </div>
+
+    <script>
+        // Add any interactive features here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterSelects = document.querySelectorAll('select');
+            filterSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    // Add filter logic here
+                    console.log('Filter changed:', select.value);
+                });
+            });
+
+            // Search functionality
+            const searchButton = document.querySelector('.search-bar button');
+            searchButton.addEventListener('click', function() {
+                const searchInput = document.querySelector('.search-bar input');
+                console.log('Search:', searchInput.value);
+            });
+
+            // Pagination functionality
+            const pageButtons = document.querySelectorAll('.page-button');
+            pageButtons.forEach(button => {
+                button

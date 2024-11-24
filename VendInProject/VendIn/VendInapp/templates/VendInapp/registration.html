@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Vendor Registration</title>
+{% block styles %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #FF6B6B;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #4ECDC4;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="time"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #FFE66D;
+        border-radius: 15px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #4ECDC4;
+        box-shadow: 0 0 10px rgba(78, 205, 196, 0.2);
+    }
+
+    textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .time-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .days-group {
+        margin-top: 20px;
+    }
+
+    .days-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .day-btn-checkbox {
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+    }
+
+    .day-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        background: #FFE66D;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        color: #333;
+        user-select: none;
+    }
+
+    .day-btn:hover {
+        background: #4ECDC4;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .day-btn-checkbox:checked + .day-btn {
+        background: #FF6B6B;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .warning-box {
+        background: linear-gradient(45deg, #FFE66D, #FFD93D);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #333;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(255, 230, 109, 0.2);
+    }
+
+    .warning-icon {
+        font-size: 24px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #333;
+    }
+
+    .form-header p {
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .error-message {
+        color: #FF6B6B;
+        font-size: 0.9em;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 20px;
+        }
+
+        .time-group {
+            grid-template-columns: 1fr;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+    }
+
+    /* Messages styling */
+    .messages {
+        list-style: none;
+        margin-bottom: 20px;
+    }
+
+    .message {
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .message.success {
+        background-color: #4ECDC4;
+        color: white;
+    }
+
+    .message.error {
+        background-color: #FF6B6B;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-header">
+        <h1>🍜 Street Vendor Registration 🌮</h1>
+        <p>Join our community of amazing street food vendors!</p>
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" action="{% url 'vendor_register' %}" id="vendorForm">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="error-message">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            {% if field.help_text %}
+            <div class="help-text">{{ field.help_text }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="days-group">
+            <label>Days Open</label>
+            <div class="days-container">
+                {% for day in days %}
+                <div class="day-wrapper" style="display: inline-block;">
+                    <input type="checkbox"
+                           name="operating_days"
+                           value="{{ day|lower }}"
+                           id="day_{{ day|lower }}"
+                           class="day-btn-checkbox">
+                    <label for="day_{{ day|lower }}" class="day-btn">
+                        {{ day }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <span class="warning-icon">🎉</span>
+            <span>After registration, you'll be able to add your mouth-watering photos and menu items!</span>
+        </div>
+
+        <button type="submit" class="submit-btn">Join the Community! 🚀</button>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form validation
+        const form = document.getElementById('vendorForm');
+        form.addEventListener('submit', function(e) {
+            const dayCheckboxes = document.querySelectorAll('input[name="operating_days"]:checked');
+            if (dayCheckboxes.length === 0) {
+                e.preventDefault();
+                alert('Please select at least one operating day');
+                return false;
+            }
+        });
+
+        // Optional: Add animation when selecting days
+        const dayButtons = document.querySelectorAll('.day-btn');
+        dayButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Add a quick scale animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    });
+</script>
+{% endblock %}
