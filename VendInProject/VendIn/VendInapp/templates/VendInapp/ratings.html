@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Vendor Reviews</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF6B6B;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header p {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .vendor-profile {
+            margin-bottom: 30px;
+        }
+
+        .vendor-profile h2 {
+            color: #4ECDC4;
+            margin-bottom: 10px;
+        }
+
+        .vendor-profile p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .rating {
+            margin: 20px 0;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE66D;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            margin-top: 8px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4ECDC4;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE66D;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            height: 100px;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .report-scam {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        .reviews {
+            margin-top: 30px;
+        }
+
+        .reviews h3 {
+            color: #4ECDC4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        #review-list {
+            list-style: none;
+        }
+
+        .review-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #FFE66D;
+            transition: all 0.3s ease;
+        }
+
+        .review-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 230, 109, 0.2);
+        }
+
+        .review-rating {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .decoration {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #FFE66D;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .decoration:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .decoration:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .decoration:nth-child(3) {
+            bottom: 15%;
+            left: 20%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+
+    <div class="container">
+        <div class="form-header">
+            <h1>⭐ Rate & Review ⭐</h1>
+            <p>Share your experience with other food lovers!</p>
+        </div>
+
+        <section class="vendor-profile">
+            <h2>Street Food Express</h2>
+            <p>Delicious street tacos, burritos, and quesadillas. Fresh ingredients and authentic flavors!</p>
+            
+            <div class="rating">
+                <label for="rating">Rate this vendor:</label>
+                <select id="rating">
+                    <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
+                    <option value="4">4 Stars ⭐⭐⭐⭐</option>
+                    <option value="3">3 Stars ⭐⭐⭐</option>
+                    <option value="2">2 Stars ⭐⭐</option>
+                    <option value="1">1 Star ⭐</option>
+                </select>
+            </div>
+
+            <div class="review-form">
+                <label for="review">Share your experience:</label>
+                <textarea id="review" placeholder="Tell us what you loved about their food..."></textarea>
+                <button onclick="submitReview()">Submit Review 📝</button>
+            </div>
+
+            <button class="report-scam" onclick="reportScam()">Report as Scam 🚫</button>
+
+            <div class="reviews">
+                <h3>Customer Reviews</h3>
+                <ul id="review-list"></ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Initialize reviews array with some sample data
+        let reviews = [
+            {
+                rating: 5,
+                text: "Amazing tacos! The meat was perfectly seasoned and the tortillas were fresh. Will definitely come back for more!",
+                date: "2024-11-23"
+            },
+            {
+                rating: 4,
+                text: "Great food and friendly service. The salsa was incredible! Portions could be a bit bigger though.",
+                date: "2024-11-22"
+            }
+        ];
+
+        // Function to display reviews
+        function displayReviews() {
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            
+            reviews.forEach(review => {
+                const li = document.createElement('li');
+                li.className = 'review-item';
+                
+                const stars = '⭐'.repeat(review.rating);
+                li.innerHTML = `
+                    <div class="review-rating">${stars}</div>
+                    <div class="review-text">${review.text}</div>
+                    <div class="review-date">${new Date(review.date).toLocaleDateString()}</div>
+                `;
+                
+                reviewList.prepend(li);
+            });
+        }
+
+        // Function to submit a new review
+        function submitReview() {
+            const rating = document.getElementById('rating').value;
+            const reviewText = document.getElementById('review').value;
+            
+            if (!reviewText.trim()) {
+                alert('Please write a review before submitting.');
+                return;
+            }
+
+            const newReview = {
+                rating: parseInt(rating),
+                text: reviewText,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            reviews.push(newReview);
+            displayReviews();
+
+            // Clear the form
+            document.getElementById('review').value = '';
+            document.getElementById('rating').value = '5';
+
+            alert('Thank you for your review! 🎉');
+        }
+
+        // Function to report a scam
+        function reportScam() {
+            if (confirm('Are you sure you want to report this vendor as a scam?')) {
+                alert('Thank you for reporting. Our team will investigate this vendor. 🕵️‍♂️');
+            }
+        }
+
+        // Display initial reviews when page loads
+        displayReviews();
+    </script>
+</body>
+</html>
