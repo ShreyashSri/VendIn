@@ -1,0 +1,57 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.sqlite3-journal
+local_settings.py
+
+# Static and media files
+/media/
+/static/
+/staticfiles/
+
+# Migrations
+**/migrations/__pycache__/
+**/migrations/*.pyc
+# **/migrations/*.py
+
+# Environment
+.env
+.env.*
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage/test
+.coverage
+htmlcov/
+.pytest_cache/
+
+# pip and build
+pip-log.txt
+pip-delete-this-directory.txt
+build/
+dist/
+*.egg-info/
+
+copilot.json
