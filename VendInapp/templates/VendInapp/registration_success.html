@@ -1,0 +1,233 @@
+{% extends 'VendInapp/base.html' %}
+
+{% block title %}Registration Successful{% endblock %}
+
+{% block content %}
+<div class="success-page">
+    <div class="success-container">
+        <div class="success-icon-wrapper">
+            <div class="success-icon">✓</div>
+        </div>
+        
+        <h1>Registration Successful! 🎉</h1>
+        <div class="status-card">
+            <div class="status-header">Application Status</div>
+            <div class="status-body">
+                <div class="status-badge">Under Review</div>
+                <p>Our team is reviewing your application</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-icon">ℹ️</div>
+            <div class="info-text">
+                <h3>What's Next?</h3>
+                <ul>
+                    <li>We will review your application within 24-48 hours</li>
+                    <li>You'll receive an email notification once approved</li>
+                    <li>After approval, you can set up your complete vendor profile</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'vendor_list' %}" class="primary-btn">
+                <span>Browse Vendor Community</span>
+                <span class="btn-icon">→</span>
+            </a>
+            <a href="{% url 'vendor_register' %}" class="secondary-btn">
+                <span>Register Another Vendor</span>
+                <span class="btn-icon">+</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .success-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .success-container {
+        max-width: 600px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .success-icon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: #4ECDC4;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 40px;
+        box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        animation: scaleIn 0.5s ease-out;
+    }
+
+    @keyframes scaleIn {
+        0% { transform: scale(0); }
+        70% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    h1 {
+        text-align: center;
+        color: #FF6B6B;
+        margin-bottom: 30px;
+        font-size: 2.2em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-header {
+        background: #FFE66D;
+        color: #333;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .status-body {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: #FF6B6B;
+        color: white;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .info-box {
+        background: linear-gradient(45deg, #4ECDC4, #2ab7ae);
+        border-radius: 15px;
+        padding: 20px;
+        color: white;
+        margin-bottom: 30px;
+        display: flex;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .info-icon {
+        font-size: 24px;
+    }
+
+    .info-text h3 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .info-text ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .info-text li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    .info-text li:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .primary-btn, .secondary-btn {
+        flex: 1;
+        padding: 15px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .primary-btn {
+        background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+        color: white;
+    }
+
+    .secondary-btn {
+        background: #FFE66D;
+        color: #333;
+    }
+
+    .btn-icon {
+        font-size: 1.2em;
+        transition: transform 0.3s;
+    }
+
+    .primary-btn:hover, .secondary-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .primary-btn:hover .btn-icon {
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 480px) {
+        .success-container {
+            padding: 20px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 1.8em;
+        }
+    }
+</style>
+{% endblock %}
